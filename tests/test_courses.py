@@ -1,14 +1,15 @@
-import time
-
 import pytest
-from playwright.sync_api import Playwright, Page, sync_playwright, expect
+from playwright.sync_api import Page, expect
 
 @pytest.mark.courses
 @pytest.mark.regression
 def test_empty_courses_list(chromium_page_with_state: Page):
 
+    # Переходим на страницу courses
+    chromium_page_with_state.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses")
+
     # Проверка наличия и текста заголовка "Courses"
-    courses_text =  chromium_page_with_state.get_by_test_id('courses-list-toolbar-title-text')
+    courses_text = chromium_page_with_state.get_by_test_id('courses-list-toolbar-title-text')
     expect(courses_text).to_be_visible()
 
     # Проверка наличия иконки
