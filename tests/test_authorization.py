@@ -1,5 +1,5 @@
 import pytest
-from playwright.sync_api import sync_playwright, expect, Page, Playwright
+from playwright.sync_api import expect, Page, Playwright
 
 # Фикстура
 @pytest.fixture
