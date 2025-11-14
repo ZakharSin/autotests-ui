@@ -1,23 +1,35 @@
-from playwright.sync_api import sync_playwright, expect
+import pytest
+from playwright.sync_api import sync_playwright, expect, Page, Playwright
 
+# Фикстура
+@pytest.fixture
+def chromium_page(playwright: Playwright) -> Page:
+    browser = playwright.chromium.launch(headless=False)
+    page = browser.new_page()
+    yield page
+    browser.close()
 
-def test_wrong_email_or_password_authorization():  # Создаем тестовую функцию
-    # Все остальные действия остаются без изменений
-    with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(headless=False)
-        page = browser.new_page()
+# Параметризация
+@pytest.mark.parametrize("email, password", [
+    ("user.name@gmail.com", "password"),
+    ("user.name@gmail.com", "  "),
+    ("  ", "password")
+])
 
-        page.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/login")
+#Функция
+def test_wrong_email_or_password_authorization(chromium_page: Page, email: str, password: str):
 
-        email_input = page.get_by_test_id('login-form-email-input').locator('input')
-        email_input.fill("user.name@gmail.com")
+    chromium_page.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/login")
 
-        password_input = page.get_by_test_id('login-form-password-input').locator('input')
-        password_input.fill("password")
+    email_input = chromium_page.get_by_test_id('login-form-email-input').locator('input')
+    email_input.fill(email)
 
-        login_button = page.get_by_test_id('login-page-login-button')
-        login_button.click()
+    password_input = chromium_page.get_by_test_id('login-form-password-input').locator('input')
+    password_input.fill(password)
 
-        wrong_email_or_password_alert = page.get_by_test_id('login-page-wrong-email-or-password-alert')
-        expect(wrong_email_or_password_alert).to_be_visible()
-        expect(wrong_email_or_password_alert).to_have_text("Wrong email or password")
+    login_button = chromium_page.get_by_test_id('login-page-login-button')
+    login_button.click()
+
+    wrong_email_or_password_alert = chromium_page.get_by_test_id('login-page-wrong-email-or-password-alert')
+    expect(wrong_email_or_password_alert).to_be_visible()
+    expect(wrong_email_or_password_alert).to_have_text("Wrong email or password")
