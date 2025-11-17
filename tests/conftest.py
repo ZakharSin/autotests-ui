@@ -38,3 +38,5 @@ def chromium_page_with_state(initialize_browser_state, playwright: Playwright) -
     page = context.new_page()
     yield page
     browser.close()
+
+pytest_plugins = ("fixtures.pages", "fixtures.browser")
