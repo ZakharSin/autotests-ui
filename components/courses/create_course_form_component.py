@@ -1,26 +1,24 @@
 from playwright.sync_api import Page, expect
 from components.base_component import BaseComponent
-
+from elements.input import Input
+from elements.textarea import Textarea
 class CreateCourseFormComponent(BaseComponent):
     def __init__(self, page: Page):
         super().__init__(page)
 
-        self.create_course_title_input = page.get_by_test_id('create-course-form-title-input').locator('input')
-        self.create_course_estimated_time_input = (
-            page.get_by_test_id('create-course-form-estimated-time-input').locator('input')
-        )
-        self.create_course_description_textarea = (
-            page.get_by_test_id('create-course-form-description-input').locator('textarea').first
-        )
-        self.create_course_max_score_input = page.get_by_test_id('create-course-form-max-score-input').locator('input')
-        self.create_course_min_score_input = page.get_by_test_id('create-course-form-min-score-input').locator('input')
+        self.create_course_title_input = Input(page, 'create-course-form-title-input', 'Course title input')
+        self.create_course_estimated_time_input = Input(page, 'create-course-form-estimated-time-input', 'Estimated time input')
 
-    def check_visible(self):
-        expect(self.create_course_title_input).is_visible()
-        expect(self.create_course_description_textarea).to_be_visible()
-        expect(self.create_course_estimated_time_input).to_be_visible()
-        expect(self.create_course_max_score_input).to_be_visible()
-        expect(self.create_course_min_score_input).to_be_visible()
+        self.create_course_description_textarea = Textarea(page, 'create-course-form-description-input', 'Description textarea')
+        self.create_course_max_score_input = Input(page, 'create-course-form-max-score-input', 'Max score input')
+        self.create_course_min_score_input = Input(page, 'create-course-form-min-score-input', 'Min score input')
+
+    def check_visible(self, index: int):
+        self.create_course_title_input.check_visible(nth=index)
+        self.create_course_description_textarea.check_visible(nth=index)
+        self.create_course_estimated_time_input.check_visible(nth=index)
+        self.create_course_max_score_input.check_visible(nth=index)
+        self.create_course_min_score_input.check_visible(nth=index)
 
     def fill(self, title: str, description: str, max_score: str, min_score: str, estimated_time: str):
         self.create_course_title_input.fill(title)

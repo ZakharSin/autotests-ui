@@ -19,7 +19,7 @@ def test_create_course(courses_list_page: CoursesListPage, create_course_page: C
     create_course_page.fill_create_course_form(title='Playwright', description='2 weeks', estimated_time='Playwright', max_score='10', min_score='10')
     create_course_page.click_create_course_button()
 
-    courses_list_page.toolbar_view.check_visible()
+    courses_list_page.toolbar_view.check_visible(index=0)
     courses_list_page.course_view.check_visible(index=0, title='Playwright', estimated_time='Playwright', max_score='10', min_score='10')
 
 @pytest.mark.courses
@@ -30,5 +30,5 @@ def test_empty_courses_list(courses_list_page: CoursesListPage):
     courses_list_page.navbar.check_visible("username")
     courses_list_page.sidebar.check_visible()
 
-    courses_list_page.toolbar_view.check_visible()
+    courses_list_page.toolbar_view.check_visible(index=0)
     courses_list_page.check_visible_empty_view()
