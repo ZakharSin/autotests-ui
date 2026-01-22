@@ -38,18 +38,6 @@ class TestAuthorization:
         dashboard_page.sidebar.check_visible()
         dashboard_page.sidebar.click_logout()
 
-        login_page.page.wait_for_url("**/login")
-        ##login_page.fill_form(email="user.name@gmail.com", password="password")
-        login_page.login_form.fill(email="user.name@gmail.com", password="password")
-        login_page.click_login_button()
-        ##dashboard_page.page.wait_for_url("**/dashboard")
-        time.sleep(5)
-
-        # Проверка элементов Dashboard после входа
-        ##dashboard_page.dashboard_toolbar_view.check_visible()
-        ##dashboard_page.navbar.check_visible("username")
-        ##dashboard_page.sidebar.check_visible()
-
     def test_navigate_from_authorization_to_registration(
             self,
             login_page: LoginPage,
