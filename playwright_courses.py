@@ -1,4 +1,6 @@
 from playwright.sync_api import sync_playwright, expect
+from tools.routes import AppRoute
+from config import settings
 
 with sync_playwright() as playwright:
     # Открываем браузер и создаем новую страницу
@@ -8,19 +10,19 @@ with sync_playwright() as playwright:
     page = context.new_page()
 
     # Переходим на страницу входа
-    page.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/registration")
+    page.goto(AppRoute.REGISTRATION)
 
     # Заполняем поле email
     email_input = page.get_by_test_id('registration-form-email-input').locator('input')
-    email_input.fill("user.name@gmail.com")
+    email_input.fill(settings.test_user.email)
 
     # Заполняем поле username
     username_input = page.get_by_test_id('registration-form-username-input').locator('input')
-    username_input.fill("username")
+    username_input.fill(settings.test_user.username)
 
     # Заполняем поле password
     password_input = page.get_by_test_id('registration-form-password-input').locator('input')
-    password_input.fill("password")
+    password_input.fill(settings.test_user.password)
 
     # Нажимаем на кнопку registration
     registration_button = page.get_by_test_id('registration-page-registration-button')
@@ -36,7 +38,7 @@ with sync_playwright() as playwright:
     page = context.new_page()
 
     # Переходим на страницу Courses
-    page.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses")
+    page.goto(AppRoute.COURSES)
 
     # Проверка наличия и текста заголовка "Courses"
     courses_text = page.get_by_test_id('courses-list-toolbar-title-text')
