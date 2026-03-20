@@ -35,4 +35,4 @@ def initialize_browser_state(playwright: Playwright) -> Page:
     context.storage_state(path='browser-state.json')
     browser.close()
 
-pytest_plugins = ("fixtures.pages", "fixtures.browser")
+pytest_plugins = ("fixtures.pages", "fixtures.browser", "fixtures.allure")

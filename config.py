@@ -1,4 +1,3 @@
-# config.py
 from enum import Enum
 from typing import Self
 from pathlib import Path  # ← ОБЯЗАТЕЛЬНО ДОБАВИТЬ
@@ -53,6 +52,7 @@ class Settings(BaseSettings):
     test_data: TestData
     videos_dir: DirectoryPath
     tracing_dir: DirectoryPath
+    allure_results_dir: DirectoryPath
     browser_state_file: FilePath
 
     @classmethod
@@ -60,15 +60,18 @@ class Settings(BaseSettings):
         # ← ИСПРАВЛЕНО: строим пути относительно _PROJECT_ROOT
         videos_dir = _PROJECT_ROOT / "videos"
         tracing_dir = _PROJECT_ROOT / "tracing"
+        allure_results_dir = _PROJECT_ROOT / "allure-results"
         browser_state_file = _PROJECT_ROOT / "browser-state.json"
 
         videos_dir.mkdir(exist_ok=True)
         tracing_dir.mkdir(exist_ok=True)
+        allure_results_dir.mkdir(exist_ok=True)
         browser_state_file.touch(exist_ok=True)
 
         return Settings(
             videos_dir=videos_dir,
             tracing_dir=tracing_dir,
+            allure_results_dir=allure_results_dir,
             browser_state_file=browser_state_file
         )
 
