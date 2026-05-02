@@ -6,7 +6,7 @@ from config import settings
 @pytest.fixture(scope="session")
 def initialize_browser_state(playwright: Playwright) -> Page:
     # Открываем браузер и создаем новую страницу
-    browser = playwright.chromium.launch(headless=True)
+    browser = playwright.chromium.launch(headless=False)
     context = browser.new_context(
         base_url=settings.get_base_url()
     )
